@@ -59,12 +59,13 @@ __KERNEL_RCSID(0, "$NetBSD: cd9660_node.c,v 1.34 2014/11/10 18:46:33 maxv Exp $"
 
 extern int prtactive;	/* 1 => print out reclaim of active vnodes */
 
+/// Memory pool used for allocating ISO node structures.
 struct pool cd9660_node_pool;
 
 static u_int cd9660_chars2ui(const u_char *, int);
 
-/*
- * Initialize pool for nodes.
+/**
+ * Initialize the iso_node memory pool.
  */
 void
 cd9660_init(void)
@@ -75,18 +76,17 @@ cd9660_init(void)
 	    "cd9660nopl", &pool_allocator_nointr, IPL_NONE);
 }
 
-/*
- * Reinitialize.
+/**
+ * Reinitialize any iso_node state.
  */
-
 void
 cd9660_reinit(void)
 {
 
 }
 
-/*
- * Destroy node pool.
+/**
+ * Tear down the iso_node memory pool.
  */
 void
 cd9660_done(void)
@@ -95,9 +95,10 @@ cd9660_done(void)
 	malloc_type_detach(M_ISOFSMNT);
 }
 
-/*
- * Last reference to an inode, write the inode out and if necessary,
- * truncate and deallocate the file.
+/**
+ * Handle the final reference to an inode.
+ *
+ * Clears state and marks the vnode recyclable when the on-disk inode is freed.
  */
 int
 cd9660_inactive(void *v)
@@ -120,8 +121,8 @@ cd9660_inactive(void *v)
 	return error;
 }
 
-/*
- * Reclaim an inode so that it can be used for other purposes.
+/**
+ * Reclaim an inode so it can be reused.
  */
 int
 cd9660_reclaim(void *v)
