@@ -27,7 +27,7 @@ echo 'y' | pkgin in "$PKGS"
 
 # Install formal verification dependencies.
 apt-get update
-apt-get install -y openjdk-11-jdk python3-pip z3 unzip wget bmake
+apt-get install -y openjdk-11-jdk python3-pip z3 unzip wget bmake flake8 shellcheck
 
 # Download TLA+ tools for model checking.
 wget -nv -O /tmp/tla.zip \
@@ -35,9 +35,10 @@ wget -nv -O /tmp/tla.zip \
 unzip -q /tmp/tla.zip -d /opt/tla-toolbox
 
 # Install Python requirements for proof automation.
-pip3 install --upgrade pyvmt pysmt spot z3-solver
+pip3 install --upgrade pyvmt pysmt spot z3-solver black
 
 # Start ssh server.
+
 /usr/pkg/etc/rc.d/sshd onestart
 # Enable sshd at boot.
 sed -i 's|sshd=NO|sshd=YES|' /etc/defaults/rc.conf
