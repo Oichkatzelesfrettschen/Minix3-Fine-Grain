@@ -41,7 +41,7 @@ def verify_refines() -> None:
     exe = shutil.which("refines")
     if not exe:
         LOG_REFINES.write_text(
-            "refines not found; skipping refinement verification.\n"
+            "refines not found; " "skipping refinement verification.\n"
         )
         return
 
