@@ -95,6 +95,9 @@ enum op { FILE_TO_FILE, FILE_TO_DIR, DIR_TO_DNE };
 
 static int copy(char *[], enum op, int);
 
+/**
+ * Signal handler that updates the progress indicator.
+ */
 static void
 progress(int sig __unused)
 {
@@ -102,6 +105,16 @@ progress(int sig __unused)
 	pinfo++;
 }
 
+/**
+ * Entry point for the cp utility.
+ *
+ * Parses command line options and coordinates copying files and
+ * directories as requested.
+ *
+ * @param argc Number of command line arguments.
+ * @param argv Argument vector.
+ * @return EXIT_SUCCESS on success, EXIT_FAILURE otherwise.
+ */
 int
 main(int argc, char *argv[])
 {
@@ -302,6 +315,11 @@ main(int argc, char *argv[])
 
 static int dnestack[MAXPATHLEN]; /* unlikely we'll have more nested dirs */
 static ssize_t dnesp;
+/**
+ * Push a directory nesting level onto the stack.
+ *
+ * @param dne The depth to record.
+ */
 static void
 pushdne(int dne)
 {
@@ -310,6 +328,11 @@ pushdne(int dne)
 	assert(dnesp < MAXPATHLEN);
 }
 
+/**
+ * Pop the most recently pushed directory level.
+ *
+ * @return The popped depth value.
+ */
 static int
 popdne(void)
 {
@@ -320,6 +343,15 @@ popdne(void)
 	return rv;
 }
 
+/**
+ * Copy files or directories as specified on the command line.
+ *
+ * @param argv        Null-terminated list of source paths. The last element
+ *                    is the destination when copying multiple sources.
+ * @param type        Operation mode controlling recursive behaviour.
+ * @param fts_options Flags passed to fts_open.
+ * @return 0 on success, or non-zero if any copy failed.
+ */
 static int
 copy(char *argv[], enum op type, int fts_options)
 {

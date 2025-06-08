@@ -27,7 +27,8 @@ echo 'y' | pkgin in "$PKGS"
 
 # Install formal verification dependencies.
 apt-get update
-apt-get install -y openjdk-11-jdk python3-pip z3 unzip wget bmake flake8 shellcheck
+apt-get install -y openjdk-11-jdk python3-pip z3 unzip wget bmake \
+  flake8 shellcheck doxygen python3-sphinx graphviz
 
 # Download TLA+ tools for model checking.
 wget -nv -O /tmp/tla.zip \

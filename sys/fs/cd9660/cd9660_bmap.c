@@ -50,10 +50,15 @@ __KERNEL_RCSID(0, "$NetBSD: cd9660_bmap.c,v 1.5 2014/06/14 07:39:28 hannken Exp 
 #include <fs/cd9660/cd9660_extern.h>
 #include <fs/cd9660/cd9660_node.h>
 
-/*
- * Bmap converts a the logical block number of a file to its physical block
- * number on the disk. The conversion is done by using the logical block
- * number to index into the data block (extent) for the file.
+/**
+ * Translate a file's logical block number to a physical disk block.
+ *
+ * The logical block is looked up in the ISO file system's extent table and
+ * converted into a device block number. When provided, \a a_vpp receives the
+ * underlying device vnode and \a a_bnp is set to the resulting block number.
+ *
+ * \param v  Pointer to a ``vop_bmap_args`` structure describing the request.
+ * \return   Always returns 0.
  */
 int
 cd9660_bmap(void *v)

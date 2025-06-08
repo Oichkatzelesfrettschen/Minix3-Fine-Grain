@@ -71,6 +71,16 @@ void cook_buf(FILE *);
 void raw_args(char *argv[]);
 void raw_cat(int);
 
+/**
+ * Entry point for the cat utility.
+ *
+ * Parses command line flags and dispatches to either cooked or raw
+ * processing modes.
+ *
+ * @param argc Number of command line arguments.
+ * @param argv Argument vector.
+ * @return EXIT_SUCCESS on success, otherwise EXIT_FAILURE.
+ */
 int
 main(int argc, char *argv[])
 {
@@ -139,6 +149,13 @@ main(int argc, char *argv[])
 	return rval;
 }
 
+/**
+ * Process files in "cooked" mode applying options like line numbering
+ * or non-printable character translation.
+ *
+ * @param argv NULL-terminated list of file names. A value of "-" denotes
+ *             standard input.
+ */
 void
 cook_args(char **argv)
 {
@@ -167,6 +184,14 @@ cook_args(char **argv)
 	} while (*argv);
 }
 
+/**
+ * Output a single file in cooked mode.
+ *
+ * Handles options for squeezing blank lines, displaying end of lines,
+ * and showing non-printable characters.
+ *
+ * @param fp Stream to read from.
+ */
 void
 cook_buf(FILE *fp)
 {
@@ -233,6 +258,11 @@ cook_buf(FILE *fp)
 		err(EXIT_FAILURE, "stdout");
 }
 
+/**
+ * Process files in raw mode without any character translation.
+ *
+ * @param argv NULL-terminated list of file names. "-" denotes stdin.
+ */
 void
 raw_args(char **argv)
 {
@@ -280,6 +310,11 @@ skipnomsg:
 	} while (*argv);
 }
 
+/**
+ * Copy bytes from an input descriptor directly to stdout.
+ *
+ * @param rfd File descriptor to read from.
+ */
 void
 raw_cat(int rfd)
 {

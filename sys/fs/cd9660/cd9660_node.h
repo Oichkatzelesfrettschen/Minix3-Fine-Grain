@@ -50,6 +50,7 @@
  */
 #define doff_t	long
 
+/** Rock Ridge attributes associated with an ISO file. */
 typedef	struct	{
 	struct timespec	iso_atime;	/* time of last access */
 	struct timespec	iso_mtime;	/* time of last modification */
@@ -60,6 +61,7 @@ typedef	struct	{
 	short		iso_links;	/* links of file */
 	dev_t		iso_rdev;	/* Major/Minor number for special */
 } ISO_RRIP_INODE;
+/** In-memory representation of an ISO9660 inode. */
 
 struct iso_node {
 	struct	genfs_node i_gnode;
