@@ -27,7 +27,9 @@ experimentation.
 
 ## Formal Verification and Style Checks
 
-Before running the checks make sure all dependencies are installed.
+This section explains how to install dependencies, run style checks, and
+generate verification artifacts. Before running the checks make sure all
+dependencies are installed.
 
 ### Setup
 
@@ -37,14 +39,14 @@ are needed for the style checks.
 
 ### Style Check
 
-Execute `scripts/check_format.sh` to validate code formatting.  The script
-prints diagnostics to the console and writes a summary to `check_format.log` in
-the current directory.
+Execute `scripts/check_format.sh` to validate code formatting. The script prints
+diagnostics to the console and writes a summary to `check_format.log` in the
+current directory.
 
 ### Generating Proofs
 
 Invoke `scripts/generate_proofs.py` to create formal verification artifacts.
 The script requires the **TLA\+ Toolbox** and **FDR** to be installed and
 accessible on your `PATH`.  Generated `.tla` and `.csp` files are placed in the
-`proofs/` directory.
+`proofs/` directory and a log is written to `proofs/proof.log`.
 
